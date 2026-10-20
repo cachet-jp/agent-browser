@@ -44,6 +44,14 @@ Set these in the extension's environment variables in goose:
 
 ## Syncing with upstream
 
+In a fresh clone, add the upstream remote once:
+
+```sh
+git remote add upstream https://github.com/vercel-labs/agent-browser.git
+```
+
+Then:
+
 ```sh
 git fetch upstream && git merge upstream/main && goose/install.sh
 ```
