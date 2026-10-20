@@ -12,7 +12,7 @@ PREFIX="${AGENT_BROWSER_GOOSE_PREFIX:-$HOME/.local/share/agent-browser-goose}"
 GOOSE_CONFIG="${GOOSE_CONFIG:-$HOME/.config/goose/config.yaml}"
 
 if [ "${1:-}" != "--no-build" ]; then
-  cargo build --release --manifest-path "$REPO/cli/Cargo.toml"
+  cargo build --release --locked --manifest-path "$REPO/cli/Cargo.toml"
 fi
 
 mkdir -p "$PREFIX"

@@ -5,6 +5,7 @@ Usage: python3 register.py <config.yaml> <launcher path>
 Edits the file textually so it needs no YAML library and leaves the rest of the
 config untouched. A timestamped backup is written next to the config first.
 """
+import json
 import shutil
 import sys
 import time
@@ -19,7 +20,7 @@ def block(launcher: str) -> list[str]:
         "    enabled: true\n",
         "    type: stdio\n",
         f"    name: {KEY}\n",
-        f"    cmd: {launcher}\n",
+        f"    cmd: {json.dumps(launcher)}\n",  # JSON strings are valid YAML scalars
         "    args: []\n",
         "    envs: {}\n",
         "    env_keys: []\n",
