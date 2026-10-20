@@ -1,0 +1,25 @@
+#!/bin/sh
+# Launcher for the agent-browser goose extension (stdio MCP server).
+#
+# goose spawns this script; it execs the agent-browser binary built from this
+# fork in MCP mode. Extra arguments are passed through to `agent-browser mcp`
+# (e.g. `--tools core,tabs`).
+#
+# Overrides:
+#   AGENT_BROWSER_GOOSE_BIN    path to the agent-browser binary
+#   AGENT_BROWSER_GOOSE_TOOLS  MCP tool profiles (default: core,tabs)
+#   AGENT_BROWSER_SESSION      browser session name (default: goose)
+set -eu
+
+BIN="${AGENT_BROWSER_GOOSE_BIN:-$HOME/.local/share/agent-browser-goose/agent-browser}"
+TOOLS="${AGENT_BROWSER_GOOSE_TOOLS:-core,tabs}"
+
+if [ ! -x "$BIN" ]; then
+  echo "agent-browser-goose: binary not found at $BIN; run goose/install.sh" >&2
+  exit 1
+fi
+
+# Keep goose's browser state separate from interactive CLI use.
+export AGENT_BROWSER_SESSION="${AGENT_BROWSER_SESSION:-goose}"
+
+exec "$BIN" mcp --tools "$TOOLS" "$@"
